@@ -1,4 +1,11 @@
-from fastapi import HTTPException, Path, Depends
+from fastapi import HTTPException, Path, Depends, Security
+from fastapi.security.api_key import APIKeyHeader
+import os
+
+
+API_KEY_NAME = "X-API-Key"
+api_key_header_scheme = APIKeyHeader(name=API_KEY_NAME, auto_error=False) # auto_error=False allows custom error handling
+SECRET_API_KEY = os.getenv("API_KEY", "YOUR_SECRET_KEY_HERE_REMOVE_FOR_PROD") # Replace with your secret key management
 
 def validate_reference_number(
     reference_number_input: str = Path(
@@ -36,4 +43,22 @@ def validate_reference_number(
         raise HTTPException(
             status_code=400,
             detail="Invalid format: Input must be 5 digits (e.g., 12345) or start with 'REF' followed by 5 digits (e.g., REF12345)."
+        )
+
+
+async def get_api_key(api_key_header: str = Security(api_key_header_scheme)):
+    """
+    Dependency function to validate the API key provided in the header.
+    """
+    if not api_key_header:
+        raise HTTPException(
+            status_code=403, # Forbidden
+            detail="Not authenticated: API key required in header 'X-API-Key'"
+        )
+    if api_key_header == SECRET_API_KEY:
+        return api_key_header # Return the key if it's valid
+    else:
+        raise HTTPException(
+            status_code=403, # Forbidden
+            detail="Could not validate credentials: Invalid API Key"
         )
