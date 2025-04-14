@@ -26,22 +26,19 @@
 
 3.  **Access the API:**
     Once the container is running, you can access the following URLs:
-    * **API Documentation (Swagger UI):** `http://localhost:8000/docs`
     * **Example API Endpoint:** `http://localhost:8000/loads/REF09460` (Specify a `reference_number` found in the CSV file)
 
 
 ## ✅ ToDo List　
 
-### 📦 Environment
-- [x] Research FMCSA API specifications and authentication methods
-
 ### 🔧 REST API (Load Checker) Development
-- [x] Create API skeleton with FastAPI ~~or Flask~~
+- [x] Create API skeleton with FastAPI
 - [x] Implement CSV file reading and search functionality
 - [x] Create `/loads/{reference_number}` endpoint
 - [x] Handle responses for 404 errors and invalid input
     - [ ] Write the validation logic out of main.py
-- [ ] Implement API key authentication (Optional/Bonus)
-- [x] Create Dockerfile and verify local operation
+- [ ] Return in JSON format
+- [ ] Implement API key authentication (Bonus)
+- [x] Create Dockerfile and verify local operation (Bonus)
 - [ ] Deploy to the cloud (e.g., Render, AWS, Vercel)
 
