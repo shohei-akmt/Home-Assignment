@@ -1,4 +1,4 @@
-# Take-Home-Assignment
+# Home-Assignment
 
 ## 🚀 Usage
 
